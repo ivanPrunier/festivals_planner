@@ -33,7 +33,7 @@ class ShowSerializer(serializers.ModelSerializer):
             'id': show.stage.id,
             'name': show.stage.name,
             'description': show.stage.description,
-        }
+        } if show.stage else None
 
 
 class ArtistSerializer(serializers.ModelSerializer):
