@@ -4,11 +4,12 @@ from festivals.models import Artist, Stage, Show, Festival
 
 
 class ArtistAdmin(admin.ModelAdmin):
-    fields = ('name', 'description',)
+    fields = ('name', 'description', 'infoconcert_url',)
 
 
 class FestivalAdmin(admin.ModelAdmin):
-    fields = ('name', 'description', 'start_date', 'end_date', 'address', 'zip_code', 'city',)
+    fields = ('name', 'description', 'start_date', 'end_date', 'address', 'zip_code', 'city',
+              'infoconcert_url',)
 
 
 class ShowAdmin(admin.ModelAdmin):

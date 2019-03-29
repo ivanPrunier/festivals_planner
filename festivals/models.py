@@ -4,6 +4,7 @@ from django.db import models
 class Artist(models.Model):
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=510, blank=True, null=True)
+    infoconcert_url = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -17,6 +18,7 @@ class Festival(models.Model):
     address = models.CharField(max_length=255, blank=True, null=True)
     zip_code = models.CharField(max_length=255, blank=True, null=True)
     city = models.CharField(max_length=255, blank=True, null=True)
+    infoconcert_url = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.name
