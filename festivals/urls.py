@@ -11,5 +11,6 @@ router.register(r'^shows', views.ShowViewSet, 'show')
 
 
 urlpatterns = [
-    url(r'^', include(router.urls))
+    url(r'^', include(router.urls)),
+    url(r'^scrap', views.scrap),
 ]
