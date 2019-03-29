@@ -1,8 +1,14 @@
-from rest_framework import viewsets, permissions
+from django.http import JsonResponse
+from rest_framework import viewsets
 
 from festivals.models import Artist, Festival, Show
 
 from festivals.serializers import FestivalSerializer, ArtistSerializer, ShowSerializer
+from festivals.services.scraping import InfoconcertScraper
+
+
+def scrap(request):
+    return JsonResponse({'a': InfoconcertScraper(Festival.objects.first()).scrap()})
 
 
 class ArtistViewSet(viewsets.ReadOnlyModelViewSet):
