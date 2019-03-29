@@ -234,3 +234,5 @@ fabric.properties
 
 festivals/__pycache__/
 festivals_planner/__pycache__/
+
+.idea/
