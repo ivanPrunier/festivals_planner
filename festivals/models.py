@@ -4,6 +4,7 @@ from django.db import models
 class Artist(models.Model):
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=510, blank=True, null=True)
+    infoconcert_url = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -17,6 +18,7 @@ class Festival(models.Model):
     address = models.CharField(max_length=255, blank=True, null=True)
     zip_code = models.CharField(max_length=255, blank=True, null=True)
     city = models.CharField(max_length=255, blank=True, null=True)
+    infoconcert_url = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -34,10 +36,13 @@ class Stage(models.Model):
 class Show(models.Model):
     festival = models.ForeignKey(Festival, on_delete=models.CASCADE, related_name='line_up')
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE, related_name='tour')
-    stage = models.ForeignKey(Stage, on_delete=models.CASCADE, related_name='shows')
+    stage = models.ForeignKey(Stage, on_delete=models.CASCADE, related_name='shows', null=True, blank=True)
     name = models.CharField(max_length=255, null=True, blank=True)
     start_datetime = models.DateTimeField(blank=True, null=True)
     end_datetime = models.DateTimeField(blank=True, null=True)
 
+    class Meta:
+        unique_together = ('festival', 'artist',)
+
     def __str__(self):
-        return f'{self.artist} presents {self.name}' if self.name else f'{self.artist}'
+        return f'{self.artist} at {self.festival}'
