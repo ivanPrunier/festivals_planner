@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'festivals',
     'rest_framework_swagger',
+    'algoliasearch_django'
 ]
 
 MIDDLEWARE = [
@@ -121,3 +122,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+ALGOLIA = {
+    'APPLICATION_ID': 'ZODSJ01B43',
+    'API_KEY': 'd767490a55ee596f58945dd44a650563'
+}
+
