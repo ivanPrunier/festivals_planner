@@ -41,8 +41,5 @@ class Show(models.Model):
     start_datetime = models.DateTimeField(blank=True, null=True)
     end_datetime = models.DateTimeField(blank=True, null=True)
 
-    class Meta:
-        unique_together = ('festival', 'artist',)
-
     def __str__(self):
         return f'{self.artist} at {self.festival}'
