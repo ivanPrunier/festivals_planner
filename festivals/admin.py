@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from festivals.models import Artist, Stage, Show, Festival
-from festivals.services.scraping import InfoconcertScraper
+from festivals.models import Artist, Stage, Show, Festival, Participation, Attendance
 
 
 class ArtistAdmin(admin.ModelAdmin):
@@ -10,10 +9,6 @@ class ArtistAdmin(admin.ModelAdmin):
 
 class FestivalAdmin(admin.ModelAdmin):
     fields = ('infoconcert_url',)
-
-    def save_model(self, request, obj, form, change):
-        super(FestivalAdmin, self).save_model(request, obj, form, change)
-        InfoconcertScraper(obj).scrap()
 
 
 class ShowAdmin(admin.ModelAdmin):
@@ -24,7 +19,17 @@ class StageAdmin(admin.ModelAdmin):
     fields = ('festival', 'name', 'description',)
 
 
+class ParticipationAdmin(admin.ModelAdmin):
+    fields = ('festival', 'user', 'start_date', 'end_date')
+
+
+class AttendanceAdmin(admin.ModelAdmin):
+    fields = ('participation', 'show',)
+
+
 admin.site.register(Artist, ArtistAdmin)
 admin.site.register(Festival, FestivalAdmin)
 admin.site.register(Show, ShowAdmin)
 admin.site.register(Stage, StageAdmin)
+admin.site.register(Participation, ParticipationAdmin)
+admin.site.register(Attendance, AttendanceAdmin)

@@ -1,3 +1,5 @@
+algoliasearch==1.20.0
+algoliasearch-django==1.7.0
 appnope==0.1.0
 backcall==0.1.0
 beautifulsoup4==4.7.1

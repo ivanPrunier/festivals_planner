@@ -1,29 +1,36 @@
-from django.http import JsonResponse
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 
-from festivals.models import Artist, Festival, Show
+from festivals.models import Artist, Festival, Show, Participation, Attendance
 
-from festivals.serializers import FestivalSerializer, ArtistSerializer, ShowSerializer
-from festivals.services.scraping import InfoconcertScraper
-
-
-def scrap(request):
-    return JsonResponse({'a': InfoconcertScraper(Festival.objects.first()).scrap()})
+from festivals.serializers import FestivalSerializer, ArtistSerializer, ShowSerializer, \
+    ParticipationSerializer, AttendanceSerializer
 
 
 class ArtistViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializer
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
 
 
 class ShowViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Show.objects.all()
     serializer_class = ShowSerializer
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
 
 
 class FestivalViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Festival.objects.all()
     serializer_class = FestivalSerializer
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+
+class ParticipationViewSet(viewsets.ModelViewSet):
+    queryset = Participation.objects.all()
+    serializer_class = ParticipationSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+
+class AttendanceViewSet(viewsets.ModelViewSet):
+    queryset = Attendance.objects.all()
+    serializer_class = AttendanceSerializer
+    permission_classes = (permissions.IsAuthenticated,)
