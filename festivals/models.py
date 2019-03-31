@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -43,3 +44,15 @@ class Show(models.Model):
 
     def __str__(self):
         return f'{self.artist} at {self.festival}'
+
+
+class Participation(models.Model):
+    festival = models.ForeignKey(Festival, on_delete=models.CASCADE, related_name='participants')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='participations')
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
+
+
+class Attendance(models.Model):
+    participation = models.ForeignKey(Participation, on_delete=models.CASCADE, related_name='shows')
+    show = models.ForeignKey(Show, on_delete=models.CASCADE, related_name='attendants')
