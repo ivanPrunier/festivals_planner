@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from rest_framework.fields import CurrentUserDefault
 
 
 class Artist(models.Model):
@@ -56,3 +57,9 @@ class Participation(models.Model):
 class Attendance(models.Model):
     participation = models.ForeignKey(Participation, on_delete=models.CASCADE, related_name='shows')
     show = models.ForeignKey(Show, on_delete=models.CASCADE, related_name='attendants')
+
+
+class Party(models.Model):
+    name = models.CharField(max_length=255)
+    festival = models.ForeignKey(Festival, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)

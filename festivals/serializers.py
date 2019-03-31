@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework.fields import CurrentUserDefault
 
-from festivals.models import Artist, Festival, Show, Participation, Attendance
+from festivals.models import Artist, Festival, Show, Participation, Attendance, Party
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -99,3 +99,17 @@ class FestivalSerializer(serializers.ModelSerializer):
         model = Festival
         fields = ('id', 'name', 'description', 'start_date', 'end_date', 'address', 'zip_code',
                   'city', 'line_up', 'participants')
+
+
+class PartySerializer(serializers.ModelSerializer):
+    festival = FestivalSerializer(required=False)
+    festival_id = serializers.PrimaryKeyRelatedField(
+        source='festival',
+        queryset=Festival.objects.all(),
+    )
+    created_by = UserSerializer(default=CurrentUserDefault())
+
+    class Meta:
+        model = Party
+        fields = ('id', 'name', 'created_by', 'festival', 'festival_id',)
+
