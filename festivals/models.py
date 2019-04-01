@@ -60,7 +60,12 @@ class Participation(models.Model):
     end_date = models.DateField(blank=True, null=True)
 
 
+class Task(models.Model):
+    party = models.ForeignKey(Party, on_delete=models.CASCADE, related_name='checklist_items')
+    assignee = models.ForeignKey(Participation, on_delete=models.SET_NULL, blank=True, null=True, related_name='assigned_tasks')
+    assignor = models.ForeignKey(Participation, on_delete=models.SET_NULL, blank=True, null=True, related_name='given_tasks')
+
+
 class Attendance(models.Model):
     participation = models.ForeignKey(Participation, on_delete=models.CASCADE, related_name='shows')
     show = models.ForeignKey(Show, on_delete=models.CASCADE, related_name='attendants')
-
