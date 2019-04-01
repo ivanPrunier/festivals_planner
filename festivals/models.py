@@ -60,6 +60,13 @@ class Participation(models.Model):
     end_date = models.DateField(blank=True, null=True)
 
 
+class PartyInvite(models.Model):
+    party = models.ForeignKey(Party, on_delete=models.CASCADE, related_name='invites')
+    receiver = models.ForeignKey(Participation, on_delete=models.CASCADE, related_name='pending_invites')
+    sender = models.ForeignKey(Participation, on_delete=models.CASCADE, related_name='sent_invitations')
+    accepted = models.BooleanField(default=False)
+
+
 class Task(models.Model):
     party = models.ForeignKey(Party, on_delete=models.CASCADE, related_name='checklist_items')
     assignee = models.ForeignKey(Participation, on_delete=models.SET_NULL, blank=True, null=True, related_name='assigned_tasks')

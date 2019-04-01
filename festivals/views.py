@@ -1,9 +1,11 @@
 from rest_framework import viewsets, permissions
 
-from festivals.models import Artist, Festival, Show, Participation, Attendance, Party, Task
+from festivals.models import Artist, Festival, Show, Participation, Attendance, Party, Task, \
+    PartyInvite
 
 from festivals.serializers import FestivalSerializer, ArtistSerializer, ShowSerializer, \
-    ParticipationSerializer, AttendanceSerializer, PartySerializer, TaskSerializer
+    ParticipationSerializer, AttendanceSerializer, PartySerializer, TaskSerializer, \
+    PartyInviteSerializer
 
 
 class ArtistViewSet(viewsets.ReadOnlyModelViewSet):
@@ -39,6 +41,12 @@ class AttendanceViewSet(viewsets.ModelViewSet):
 class PartyViewSet(viewsets.ModelViewSet):
     queryset = Party.objects.all()
     serializer_class = PartySerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+
+class PartyInviteViewSet(viewsets.ModelViewSet):
+    queryset = PartyInvite.objects.all()
+    serializer_class = PartyInviteSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
 

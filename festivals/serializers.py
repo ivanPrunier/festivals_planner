@@ -2,7 +2,8 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework.fields import CurrentUserDefault
 
-from festivals.models import Artist, Festival, Show, Participation, Attendance, Party, Task
+from festivals.models import Artist, Festival, Show, Participation, Attendance, Party, Task, \
+    PartyInvite
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -114,13 +115,35 @@ class PartySerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'created_by', 'festival', 'festival_id',)
 
 
+class PartyInviteSerializer(serializers.ModelSerializer):
+    party = PartySerializer(required=False)
+    party_id = serializers.PrimaryKeyRelatedField(
+        source='party',
+        queryset=Party.objects.all(),
+    )
+    sender = ParticipationSerializer(required=False)
+    sender_id = serializers.PrimaryKeyRelatedField(
+        source='sender',
+        queryset=Participation.objects.all(),
+    )
+    receiver = ParticipationSerializer()
+    receiver_id = serializers.PrimaryKeyRelatedField(
+        source='receiver',
+        queryset=Participation.objects.all(),
+    )
+
+    class Meta:
+        model = PartyInvite
+        fields = ('party', 'party_id', 'sender', 'sender_id', 'receiver', 'receiver_id',)
+
+
 class TaskSerializer(serializers.ModelSerializer):
     party = PartySerializer(required=False)
     party_id = serializers.PrimaryKeyRelatedField(
         source='party',
         queryset=Party.objects.all(),
     )
-    assignee = ParticipationSerializer()
+    assignee = ParticipationSerializer(required=False)
     assignee_id = serializers.PrimaryKeyRelatedField(
         source='assignee',
         queryset=Participation.objects.all(),
