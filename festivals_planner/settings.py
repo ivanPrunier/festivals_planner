@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'festivals',
     'rest_framework_swagger',
-    'algoliasearch_django'
+    'algoliasearch_django',
 ]
 
 MIDDLEWARE = [
