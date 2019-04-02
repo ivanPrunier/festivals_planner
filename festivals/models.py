@@ -64,7 +64,7 @@ class PartyInvite(models.Model):
     party = models.ForeignKey(Party, on_delete=models.CASCADE, related_name='invites')
     receiver = models.ForeignKey(Participation, on_delete=models.CASCADE, related_name='pending_invites')
     sender = models.ForeignKey(Participation, on_delete=models.CASCADE, related_name='sent_invitations')
-    accepted = models.BooleanField(default=False)
+    accepted = models.NullBooleanField(default=None)
 
 
 class Task(models.Model):
