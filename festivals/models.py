@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django.db import models
-from rest_framework.fields import CurrentUserDefault
 
 
 class Artist(models.Model):
@@ -47,19 +46,33 @@ class Show(models.Model):
         return f'{self.artist} at {self.festival}'
 
 
+class Party(models.Model):
+    name = models.CharField(max_length=255)
+    festival = models.ForeignKey(Festival, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
+
+
 class Participation(models.Model):
     festival = models.ForeignKey(Festival, on_delete=models.CASCADE, related_name='participants')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='participations')
+    party = models.ForeignKey(Party, on_delete=models.SET_NULL, related_name='members', null=True, blank=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
+
+
+class PartyInvite(models.Model):
+    party = models.ForeignKey(Party, on_delete=models.CASCADE, related_name='invites')
+    receiver = models.ForeignKey(Participation, on_delete=models.CASCADE, related_name='pending_invites')
+    sender = models.ForeignKey(Participation, on_delete=models.CASCADE, related_name='sent_invitations')
+    accepted = models.BooleanField(default=False)
+
+
+class Task(models.Model):
+    party = models.ForeignKey(Party, on_delete=models.CASCADE, related_name='checklist_items')
+    assignee = models.ForeignKey(Participation, on_delete=models.SET_NULL, blank=True, null=True, related_name='assigned_tasks')
+    assignor = models.ForeignKey(Participation, on_delete=models.SET_NULL, blank=True, null=True, related_name='given_tasks')
 
 
 class Attendance(models.Model):
     participation = models.ForeignKey(Participation, on_delete=models.CASCADE, related_name='shows')
     show = models.ForeignKey(Show, on_delete=models.CASCADE, related_name='attendants')
-
-
-class Party(models.Model):
-    name = models.CharField(max_length=255)
-    festival = models.ForeignKey(Festival, on_delete=models.CASCADE)
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)

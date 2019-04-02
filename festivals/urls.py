@@ -11,7 +11,9 @@ router.register(r'^festivals', views.FestivalViewSet, 'festival')
 router.register(r'^shows', views.ShowViewSet, 'show')
 router.register(r'^participations', views.ParticipationViewSet, 'participation')
 router.register(r'^attendances', views.AttendanceViewSet, 'attendance')
-router.register(r'^parties', views.PartyViewSet)
+router.register(r'^parties', views.PartyViewSet, 'party')
+router.register(r'^party_invites', views.PartyInviteViewSet, 'party_invite')
+router.register(r'^tasks', views.TaskViewSet, 'task')
 
 
 urlpatterns = [
