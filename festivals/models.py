@@ -21,6 +21,24 @@ class Festival(models.Model):
     city = models.CharField(max_length=255, blank=True, null=True)
     infoconcert_url = models.CharField(max_length=255, blank=True, null=True)
 
+    @property
+    def time_table(self):
+        days = {}
+        for show in self.line_up.all():
+            day = show.start_datetime.strftime('%A %d')
+            days.setdefault(day, [])
+            days[day].append({
+                'artist': {
+                    'name': show.artist.name,
+                    'description': show.artist.description,
+                },
+                'stage': show.stage.name if show.stage else None,
+                'start_datetime': show.start_datetime,
+                'end_datetime': show.end_datetime,
+            })
+
+        return days
+
     def __str__(self):
         return self.name
 

@@ -99,7 +99,11 @@ class FestivalSerializer(serializers.ModelSerializer):
     class Meta:
         model = Festival
         fields = ('id', 'name', 'description', 'start_date', 'end_date', 'address', 'zip_code',
-                  'city', 'line_up', 'participants')
+                  'city', 'line_up', 'participants', 'time_table',)
+
+    def get_time_table(self, festival):
+        print(festival.time_table())
+        return festival.time_table()
 
 
 class PartySerializer(serializers.ModelSerializer):
