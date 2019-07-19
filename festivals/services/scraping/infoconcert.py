@@ -85,5 +85,6 @@ class InfoconcertScraper:
                 description=description,
                 infoconcert_url=artist_url,
             )
+            print(f'Created artist "{artist}".')
 
         return artist

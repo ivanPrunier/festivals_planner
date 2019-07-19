@@ -12,9 +12,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         festivals = [
-            'https://www.infoconcert.com/festival/les-zeclectiques-collection-printemps-5100/concerts.html',
-            'https://www.infoconcert.com/festival/panoramas-1575/concerts.html',
-            'https://www.infoconcert.com/festival/printemps-de-bourges-1588/concerts.html',
             'https://www.infoconcert.com/festival/we-love-green-7591/concerts.html',
             'https://www.infoconcert.com/festival/marvellous-island-8424/concerts.html',
             'https://www.infoconcert.com/festival/solidays-1696/concerts.html',
